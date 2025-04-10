@@ -4,6 +4,7 @@ import { RootState } from './app/store'
 import GoogleLogin from './components/Auth/GoogleLogin'
 import SignUp from './components/Auth/SignUp'
 import SignIn from './components/Auth/SignIn'
+import Dashboard from './features/dashboard/Dashboard'
 // import AuthStateListener from './components/Auth/AuthStateListener'
 import './App.css'
 
@@ -21,7 +22,7 @@ function App() {
                     <SignIn />
                 </div>
             ) : (
-                <p>user is logged in</p>
+                <Dashboard />
             )}
             
         </div>
