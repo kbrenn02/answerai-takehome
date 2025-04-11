@@ -41,7 +41,7 @@ const SignIn: React.FC<SignInProps> = ({ isVisible }) => {
 
     return (
         <div
-            className={`overflow-hidden transition-all duration-500 ease-in-out w-1/4 ${
+            className={`overflow-hidden transition-all duration-500 ease-in-out w-full sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 ${
                 isVisible ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
             }`}
         >
