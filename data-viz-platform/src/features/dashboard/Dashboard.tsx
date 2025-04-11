@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import SlideOverPanel from './SlideOverPanel';
 import { dummyData, Variable } from '../../assets/data/dummyData';
 
