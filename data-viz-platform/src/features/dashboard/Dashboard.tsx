@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
+import SlideOverPanel from './SlideOverPanel';
+import { dummyData, Variable } from '../../assets/data/dummyData';
 
 const Dashboard = () => {
     const [isDroppedDown, setIsDroppedDown] = useState(false);
+    const [showPanel, setShowPanel] = useState(false);
+    const [selectedVars, setSelectedVars] = useState<Variable[]>([]);
 
     const handleDropDown = () => {
         setIsDroppedDown((prev) => !prev)
@@ -26,7 +30,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-                    {/* <!-- Right Section --> */}
+            {/* <!-- Right Section --> */}
             <div className="flex-1">
                 {/* <!-- Top Bar --> */}
                 <div className="bg-black text-white p-4 m-0 flex justify-between items-center">
@@ -50,9 +54,14 @@ const Dashboard = () => {
                             <h2 className='text-4xl font-bold'>⚡️ Charging Station</h2>
                         </div>
                         <div className='flex space-x-4'>
-                            <button className="cursor-pointer bg-transparent hover:bg-gray-800 py-2 px-4 rounded-lg border border-gray-500 text-[20px]">⟲</button>
-                            <button className="cursor-pointer bg-transparent hover:bg-gray-800 py-2 px-4 rounded-lg border border-gray-500 text-[20px]">Edit Variables</button>
-                            <button className="cursor-pointer bg-transparent hover:bg-gray-800 py-2 px-4 rounded-lg border border-gray-500 text-[20px]">↥</button>
+                            <button className="cursor-pointer bg-transparent hover:bg-gray-600 py-2 px-4 rounded-lg border border-gray-500 text-[20px]">⟲</button>
+                            <button 
+                                className="cursor-pointer bg-transparent hover:bg-gray-600 py-2 px-4 rounded-lg border border-gray-500 text-[20px]"
+                                onClick={() => setShowPanel(true)}
+                            >
+                                Edit Variables
+                            </button>
+                            <button className="cursor-pointer bg-transparent hover:bg-gray-600 py-2 px-4 rounded-lg border border-gray-500 text-[20px]">↥</button>
                         </div>
                     </div>
 
@@ -88,6 +97,14 @@ const Dashboard = () => {
                     ) : (
                         <div></div>
                     )}
+
+                    <SlideOverPanel
+                        isOpen={showPanel}
+                        onClose={() => setShowPanel(false)}
+                        variables={dummyData}
+                        selectedVars={selectedVars}
+                        setSelectedVars={setSelectedVars}
+                    />
 
                 </div>
             </div>
