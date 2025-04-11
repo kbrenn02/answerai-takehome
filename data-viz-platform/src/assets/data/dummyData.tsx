@@ -2,7 +2,7 @@ export type Variable = {
     name: string;
     description: string;
     category: string;
-  };
+};
   
 export const dummyData: Variable[] = [
     { 

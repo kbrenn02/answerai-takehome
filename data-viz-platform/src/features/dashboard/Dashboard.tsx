@@ -1,26 +1,9 @@
 import { useState } from 'react'
 import SlideOverPanel from './SlideOverPanel';
 import { dummyData, Variable } from '../../assets/data/dummyData';
+import { dummyGraph } from '../../assets/data/dummyGraph';
 import Graph from './Graph';
 import KPIs from './KPIs';
-
-// type Point = { x: number; y: number; label: string };
-const mockData = [
-    [
-      { x: 0, y: 20, label: 'Jan' },
-      { x: 1, y: 45, label: 'Feb' },
-      { x: 2, y: 30, label: 'Mar' },
-      { x: 3, y: 60, label: 'Apr' }
-    ],
-    [
-      { x: 0, y: 25, label: 'Jan' },
-      { x: 1, y: 35, label: 'Feb' },
-      { x: 2, y: 40, label: 'Mar' },
-      { x: 3, y: 70, label: 'Apr' }
-    ]
-  ];
-
-const variableNames = ["Revenue", "Profit"]
 
 
 const Dashboard = () => {
@@ -120,7 +103,7 @@ const Dashboard = () => {
                     )}
 
                     <div className='flex justify-between p-6'>
-                        <Graph data={mockData} variableNames={variableNames}/>
+                        <Graph data={dummyGraph} variableNames={selectedVars.map((v) => v.name)}/>
                         <KPIs />
                     </div>
 
