@@ -19,6 +19,8 @@ const Graph: React.FC<GraphProps> = ({ data, variableNames }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+    // If I had different data for different variables, this could be adjusted for that. Since I don't, I just loop through
+    // my 4 dummy data sets. If there are more than 4 variables selected, the loop starts over 
     const currentData = data[selectedIndex % 4];
     const margin = 60;
     const maxY = Math.max(...currentData.map(d => d.y)) * 1.1;
@@ -111,7 +113,7 @@ const Graph: React.FC<GraphProps> = ({ data, variableNames }) => {
                     {/* Render Data Points */}
                     {currentData.map((p, i) => (
                         <g key={i}>
-                            {/* Invisible hover zone */}
+                            {/* Invisible hover zone. Was having an issue with my original hover solution, so I created a bigger hover zone */}
                             <circle
                                 cx={getX(i)}
                                 cy={getY(p.y)}
@@ -134,6 +136,7 @@ const Graph: React.FC<GraphProps> = ({ data, variableNames }) => {
                     ))}
                 </g>
                 
+                {/* Functionality for hovering over data points */}
                 {hoveredIndex !== null && (() => {
                     const p = currentData[hoveredIndex];
                     const maxWidth = 140;
@@ -163,19 +166,20 @@ const Graph: React.FC<GraphProps> = ({ data, variableNames }) => {
                     let tooltipX = rawX - tooltipWidth / 2;
                     let tooltipY = rawY - tooltipHeight - 15;
 
-                    // Clamp horizontal edges
+                    // Make sure the tooltip doesn't go beyond the horizontal edges
                     if (tooltipX < padding) tooltipX = padding;
                     if (tooltipX + tooltipWidth > dimensions.width - padding) {
                         tooltipX = dimensions.width - tooltipWidth - padding;
                     }
 
-                    // Flip tooltip below if it overflows top
+                    // Flip tooltip below if it overflows top of graph
                     if (tooltipY < padding) {
-                        tooltipY = rawY + 20; // push below point instead
+                        tooltipY = rawY + 20; 
                     }
 
                     return (
                         <>
+                            {/* Defininf how the glow works */}
                             <defs>
                                 <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
                                     <feGaussianBlur stdDeviation="4" result="blur" />
@@ -186,7 +190,7 @@ const Graph: React.FC<GraphProps> = ({ data, variableNames }) => {
                                 </filter>
                             </defs>
 
-                            {/* Glowing circle */}
+                            {/* Glowing circle when data is hovered over*/}
                             <circle
                                 cx={rawX}
                                 cy={rawY}

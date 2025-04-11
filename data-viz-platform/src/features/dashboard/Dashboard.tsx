@@ -132,6 +132,7 @@ const Dashboard = () => {
                         </div>
                     </div>
 
+                    {/* Panel only shows when isOpen = true */}
                     <SlideOverPanel
                         isOpen={showPanel}
                         onClose={() => setShowPanel(false)}

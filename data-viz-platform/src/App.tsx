@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from './app/store'
 import Login from './features/login/Login'
@@ -12,6 +11,7 @@ function App() {
 
     return (
         <Routes>
+            {/* If the user is authenticated, send them to the Dashboard, if not, send them to login */}
             <Route
                 path="/"
                 element={

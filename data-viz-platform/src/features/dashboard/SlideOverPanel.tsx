@@ -12,6 +12,7 @@ type SlideOverPanelProps = {
 
 const SlideOverPanel: React.FC<SlideOverPanelProps> = ({ isOpen, onClose, variables, selectedVars, setSelectedVars }) => {
     
+    // Tracking when a variable is being hovered over
     const [hoveredVar, setHoveredVar] = useState<string | null>(null);
     const hoverTimeout = useRef<NodeJS.Timeout | null>(null)
 
@@ -77,7 +78,12 @@ const SlideOverPanel: React.FC<SlideOverPanelProps> = ({ isOpen, onClose, variab
                     />
                     <div className='flex gap-2'>
                         <button className='cursor-pointer bg-gray-800 py-2 px-4 rounded-lg border border-gray-500'>✨Autofill</button>
-                        <button className='cursor-pointer bg-transparent hover:bg-gray-800 py-2 px-4 rounded-lg border border-green-500 text-green-500 text-[20px]' onClick={onClose}>⟳Rerun</button>
+                        {/* Rerun closes the panel because the variables are automatically added to the "selectedVariables" variable */}
+                        <button 
+                            className='cursor-pointer bg-transparent hover:bg-gray-800 py-2 px-4 rounded-lg border border-green-500 text-green-500 text-[20px]' 
+                            onClick={onClose}>
+                                ⟳Rerun
+                        </button>
                     </div>
                 </div>
 
@@ -114,7 +120,7 @@ const SlideOverPanel: React.FC<SlideOverPanelProps> = ({ isOpen, onClose, variab
                 )}
                 
 
-                {/* Primary and Secondary Variable placeholders */}
+                {/* Primary and Secondary Variable placeholders. These are static */}
                 <div className='py-6 space-y-4 flex flex-col '>
                     <div className='flex justify-between items-center bg-gray-800 border border-gray-500 rounded-lg p-4'>
                         <h2 className='text-2xl font-semibold text-green-500'>Primary Variables</h2>

@@ -1,5 +1,7 @@
 import { dummyKPIs } from '../../assets/data/dummyKPIs';
 
+// Imported the dummyKPIs. The component could be adjust to take data as a parameter
+
 const KPIs = () => {
     return (
         <div className='text-white px-6 w-full'>
