@@ -28,10 +28,10 @@ const SlideOverPanel: React.FC<SlideOverPanelProps> = ({ isOpen, onClose, variab
         });
     };
 
-    // sets which variable is being hovered over so that the description can show up after 1.5s
+    // sets which variable is being hovered over so that the description can appear
     const handleHoverStart = (variable: string) => {
         if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
-        hoverTimeout.current = setTimeout(() => setHoveredVar(variable), 1500);
+        hoverTimeout.current = setTimeout(() => setHoveredVar(variable), 100);
     }
 
     const handleHoverEnd = () => {
@@ -76,7 +76,7 @@ const SlideOverPanel: React.FC<SlideOverPanelProps> = ({ isOpen, onClose, variab
                     />
                     <div className='flex gap-2'>
                         <button className='cursor-pointer bg-gray-800 py-2 px-4 rounded-lg border border-gray-500'>✨Autofill</button>
-                        <button className='cursor-pointer bg-transparent hover:bg-gray-800 py-2 px-4 rounded-lg border border-green-500 text-green-500 text-[20px]'>⟳Rerun</button>
+                        <button className='cursor-pointer bg-transparent hover:bg-gray-800 py-2 px-4 rounded-lg border border-green-500 text-green-500 text-[20px]' onClick={onClose}>⟳Rerun</button>
                     </div>
                 </div>
 

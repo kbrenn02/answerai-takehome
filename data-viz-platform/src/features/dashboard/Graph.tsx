@@ -54,9 +54,13 @@ const Graph: React.FC<GraphProps> = ({ data, variableNames }) => {
                     value={selectedIndex}
                     onChange={(e) => setSelectedIndex(Number(e.target.value))}
                 >
-                {variableNames.map((name, i) => (
-                    <option key={i} value={i}>{name}</option>
-                ))}
+                    {variableNames.length === 0 ? (
+                        <option>Please select a variable</option>
+                    ) : (
+                        variableNames.map((name, i) => (
+                            <option key={i} value={i}>{name}</option>
+                        ))
+                    )}
                 </select>
             </div>
 

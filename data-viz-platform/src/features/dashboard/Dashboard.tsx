@@ -1,18 +1,36 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import SlideOverPanel from './SlideOverPanel';
 import { dummyData, Variable } from '../../assets/data/dummyData';
 import { dummyGraph } from '../../assets/data/dummyGraph';
 import Graph from './Graph';
 import KPIs from './KPIs';
+import { signOutUser } from '../../utils/firebase';
+import { clearUser } from '../../components/Auth/authSlice';
 
 
 const Dashboard = () => {
     const [isDroppedDown, setIsDroppedDown] = useState(true);
     const [showPanel, setShowPanel] = useState(false);
     const [selectedVars, setSelectedVars] = useState<Variable[]>([]);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
 
     const handleDropDown = () => {
         setIsDroppedDown((prev) => !prev)
+    }
+
+    const handleSignOut = async() => {
+        try {
+            await signOutUser()
+            console.log("Successfully signed user out")
+            dispatch(clearUser());
+            navigate('/login');
+        } catch (error) {
+            console.error("Error signing user out:", error)
+        }
     }
   
     return (
@@ -29,7 +47,7 @@ const Dashboard = () => {
                     <li className="cursor-pointer hover:bg-gray-800 py-3 rounded-lg">⚙️</li>
                 </ul>
 
-                <div className="mt-auto text-2xl cursor-pointer">
+                <div className="mt-auto text-2xl cursor-pointer hover:bg-gray-800 py-3 rounded-lg w-full text-center" onClick={handleSignOut}>
                     👤
                 </div>
             </div>
@@ -87,15 +105,15 @@ const Dashboard = () => {
                     <div className='pb-6 px-6 rounded-lg flex flex-col items-center space-y-4'>
                         <div className='text-green-500 border border-green-500 rounded-lg w-full p-3 flex justify-between'>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
-                            <p className='text-[20px]'>⋯</p>
+                            <p className='text-[20px] cursor-pointer'>⋯</p>
                         </div>
                         <div className='text-green-500 border border-green-500 rounded-lg w-full p-3 flex justify-between'>
                             <p>et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
-                            <p className='text-[20px]'>⋯</p>
+                            <p className='text-[20px] cursor-pointer'>⋯</p>
                         </div>
                         <div className='text-green-500 border border-green-500 rounded-lg w-full p-3 flex justify-between'>
                             <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident</p>
-                            <p className='text-[20px]'>⋯</p>
+                            <p className='text-[20px] cursor-pointer'>⋯</p>
                         </div>
                     </div>
                     ) : (
