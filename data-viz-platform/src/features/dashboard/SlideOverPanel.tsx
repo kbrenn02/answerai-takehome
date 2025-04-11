@@ -81,7 +81,7 @@ const SlideOverPanel: React.FC<SlideOverPanelProps> = ({ isOpen, onClose, variab
                 </div>
 
                 {/* Variables list section */}
-                <div className={`p-4 overflow-y-auto h-[35%] border border-gray-500 relative flex flex-wrap gap-2 ${
+                <div className={`p-4 overflow-y-auto h-[40%] border border-gray-500 relative flex flex-wrap gap-2 ${
                     hoveredVar ? 'rounded-t-lg rounded-b-none' : 'rounded-lg'
                     } transition-all duration-200`}>
                     {Object.entries(groupedVariables).map(([category, subVariables]) => (
@@ -106,8 +106,9 @@ const SlideOverPanel: React.FC<SlideOverPanelProps> = ({ isOpen, onClose, variab
                 </div>
                 {/* Context window for var */}
                 {hoveredVar && (
-                    <div className='p-2 bg-gray-700 border border-t-0 border-gray-500 text-md text-gray-400 rounded-b-lg transition-all duration-300'>
-                        {variables.find((v) => v.name === hoveredVar)?.description}
+                    <div className='p-5 bg-gray-700 border border-t-0 border-gray-500 text-md text-gray-400 rounded-b-lg transition-all duration-300'>
+                        <h2 className='text-3xl font-semibold mb-4'>{variables.find((v) => v.name === hoveredVar)?.name}</h2>
+                        <p className='px-3'>{variables.find((v) => v.name === hoveredVar)?.description}</p>
                     </div>
                 )}
                 

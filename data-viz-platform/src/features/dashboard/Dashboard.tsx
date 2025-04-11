@@ -1,9 +1,30 @@
 import { useState } from 'react'
 import SlideOverPanel from './SlideOverPanel';
 import { dummyData, Variable } from '../../assets/data/dummyData';
+import Graph from './Graph';
+import KPIs from './KPIs';
+
+// type Point = { x: number; y: number; label: string };
+const mockData = [
+    [
+      { x: 0, y: 20, label: 'Jan' },
+      { x: 1, y: 45, label: 'Feb' },
+      { x: 2, y: 30, label: 'Mar' },
+      { x: 3, y: 60, label: 'Apr' }
+    ],
+    [
+      { x: 0, y: 25, label: 'Jan' },
+      { x: 1, y: 35, label: 'Feb' },
+      { x: 2, y: 40, label: 'Mar' },
+      { x: 3, y: 70, label: 'Apr' }
+    ]
+  ];
+
+const variableNames = ["Revenue", "Profit"]
+
 
 const Dashboard = () => {
-    const [isDroppedDown, setIsDroppedDown] = useState(false);
+    const [isDroppedDown, setIsDroppedDown] = useState(true);
     const [showPanel, setShowPanel] = useState(false);
     const [selectedVars, setSelectedVars] = useState<Variable[]>([]);
 
@@ -12,9 +33,9 @@ const Dashboard = () => {
     }
   
     return (
-        <div className="flex">
+        <div className="flex min-h-screen">
             {/* Left Sidebar */}
-            <div className="w-20 bg-black text-white h-screen p-4 flex flex-col items-center">
+            <div className="w-20 bg-black text-white min-h-screen p-4 flex flex-col items-center">
                 <div className="text-2xl mb-8 cursor-pointer">☰</div>
 
                 <ul className="space-y-4 w-full text-center">
@@ -25,13 +46,13 @@ const Dashboard = () => {
                     <li className="cursor-pointer hover:bg-gray-800 py-3 rounded-lg">⚙️</li>
                 </ul>
 
-                <div className="absolute bottom-4 text-2xl cursor-pointer">
+                <div className="mt-auto text-2xl cursor-pointer">
                     👤
                 </div>
             </div>
 
             {/* <!-- Right Section --> */}
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col h-screen overflow-y-auto">
                 {/* <!-- Top Bar --> */}
                 <div className="bg-black text-white p-4 m-0 flex justify-between items-center">
                     <div className="flex space-x-4">
@@ -97,6 +118,11 @@ const Dashboard = () => {
                     ) : (
                         <div></div>
                     )}
+
+                    <div className='flex justify-between p-6'>
+                        <Graph data={mockData} variableNames={variableNames}/>
+                        <KPIs />
+                    </div>
 
                     <SlideOverPanel
                         isOpen={showPanel}

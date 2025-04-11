@@ -19,7 +19,7 @@ const VariableItem: React.FC<VariableItemProps> = ({ name, isSelected, onSelect,
                 isSelected ? 'bg-gray-500 text-green-500 border-green-500' : 'bg-gray-700 text-gray-400 hover:bg-gray-500'
                 } transition`}
         >
-            {isSelected ? '✨' : ''} {name}
+            {isSelected ? `✨ ${name} ✔︎` : `${name} +`}
         </div>
     )
 }
