@@ -57,9 +57,10 @@ const SlideOverPanel: React.FC<SlideOverPanelProps> = ({ isOpen, onClose, variab
 
             {/* Panel */}
             <div 
-                className={`w-1/2 bg-gray-800 border-l border-gray-500 shadow-lg h-full flex flex-col transform transition-transform duration-300 ease-in-out ${
+                className={`w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2 bg-gray-800 border-l border-gray-500 shadow-lg h-full flex flex-col transform transition-transform duration-300 ease-in-out ${
                     isOpen ? 'translate-x-0' : 'translate-x-full'
                 } pt-3 px-3`}
+            
             >
                 {/* Header */}
                 <div className='flex justify-between items-center p-4'>

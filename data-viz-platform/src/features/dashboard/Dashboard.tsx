@@ -14,6 +14,7 @@ const Dashboard = () => {
     const [isDroppedDown, setIsDroppedDown] = useState(true);
     const [showPanel, setShowPanel] = useState(false);
     const [selectedVars, setSelectedVars] = useState<Variable[]>([]);
+    const [showSidebar, setShowSidebar] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -34,13 +35,19 @@ const Dashboard = () => {
     }
   
     return (
-        <div className="flex min-h-screen">
+        <div className="flex min-h-screen flex-col md:flex-row">
             {/* Left Sidebar */}
-            <div className="w-20 bg-black text-white min-h-screen p-4 flex flex-col items-center">
-                <div className="text-2xl mb-8 cursor-pointer">☰</div>
+            <div className="md:hidden bg-black text-white p-4 flex justify-between items-center">
+                <div className="text-2xl cursor-pointer" onClick={() => setShowSidebar(!showSidebar)}>☰</div>
+                <div className="text-xl">Dashboard</div>
+            </div>
 
+            <div className={`bg-black text-white p-4 flex flex-col items-center 
+                ${showSidebar ? 'flex' : 'hidden'} 
+                md:flex md:w-20 min-h-screen fixed md:relative z-50 top-0 left-0`}
+            >
                 <ul className="space-y-4 w-full text-center">
-                    <li className="cursor-pointer bg-gray-800 py-3 rounded-lg border border-gray-500">🏠</li>
+                    <li className="cursor-pointer bg-gray-800 py-3 rounded-lg border border-gray-500" onClick={() => setShowSidebar(false)}>🏠</li>
                     <li className="cursor-pointer hover:bg-gray-800 py-3 rounded-lg">🔔</li>
                     <li className="cursor-pointer hover:bg-gray-800 py-3 rounded-lg">📋</li>
                     <li className="cursor-pointer hover:bg-gray-800 py-3 rounded-lg">☁️</li>
@@ -53,29 +60,27 @@ const Dashboard = () => {
             </div>
 
             {/* <!-- Right Section --> */}
-            <div className="flex-1 flex flex-col h-screen overflow-y-auto">
+            <div className="flex-1 flex flex-col md:ml-20 h-screen overflow-y-auto">
                 {/* <!-- Top Bar --> */}
-                <div className="bg-black text-white p-4 m-0 flex justify-between items-center">
-                    <div className="flex space-x-4">
+                <div className="bg-black text-white p-4 m-0 flex flex-wrap justify-between items-center gap-4">
+                    <div className="flex flex-wrap gap-2 md:space-x-4">
                         <button className="bg-gray-800 py-2 px-4 rounded-lg border border-gray-500">Charging Stations</button>
                         <button className="bg-transparent hover:bg-gray-800 py-2 px-4 rounded-lg">Fleet Sizing</button>
                         <button className="bg-transparent hover:bg-gray-800 py-2 px-4 rounded-lg">Parking</button>
                     </div>
 
                     <div className="flex items-center">
-                        <input type="text" className="py-2 px-4 rounded-lg bg-gray-800 border border-gray-500" placeholder="Search..." />
+                        <input type="text" className="py-2 px-4 rounded-lg bg-gray-800 border border-gray-500 w-full sm:w-auto" placeholder="Search..." />
                     </div>
                 </div>
 
                 {/* <!-- Main Content Area --> */}
-                <div className="bg-gray-800 p-6 m-0 rounded-lg border border-gray-500">
+                <div className="bg-gray-800 p-4 sm:p-6 rounded-lg border border-gray-500 flex-1 m-0">
 
                     {/* First header w/ the edit variables button */}
-                    <div className="p-6 rounded-lg flex justify-between items-center">
-                        <div className='flex items-center'>
-                            <h2 className='text-4xl font-bold'>⚡️ Charging Station</h2>
-                        </div>
-                        <div className='flex space-x-4'>
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 rounded-lg">
+                        <h2 className='text-2xl sm:text-4xl font-bold'>⚡️ Charging Station</h2>
+                        <div className='flex flex-wrap gap-2'>
                             <button className="cursor-pointer bg-transparent hover:bg-gray-600 py-2 px-4 rounded-lg border border-gray-500 text-[20px]">⟲</button>
                             <button 
                                 className="cursor-pointer bg-transparent hover:bg-gray-600 py-2 px-4 rounded-lg border border-gray-500 text-[20px]"
@@ -88,17 +93,14 @@ const Dashboard = () => {
                     </div>
 
                     {/* Second section with Best Scenario Results */}
-                    <div className='p-6 rounded-lg flex justify-between items-center'>
-                        <div className='flex items-center text-green-500'>
-                            <h3 className='text-2xl font-bold'>✨ Best Scenario Results</h3>
-                        </div>
-                        <div className='flex'>
-                            <button 
-                              className="cursor-pointer bg-transparent hover:bg-gray-800 py-2 px-4 rounded-4xl border border-green-500 text-green-500 text-[20px]"
-                              onClick={handleDropDown}>
-                                {isDroppedDown ? '∧' : '∨'}
-                            </button>
-                        </div>
+                    <div className='flex justify-between items-center p-4'>
+                        <h3 className='text-xl sm:text-2xl font-bold text-green-500'>✨ Best Scenario Results</h3>
+                        <button 
+                            className="bg-transparent hover:bg-gray-800 py-2 px-4 rounded-4xl border border-green-500 text-green-500 text-[20px] cursor-pointer"
+                            onClick={handleDropDown}
+                        >
+                            {isDroppedDown ? '∧' : '∨'}
+                        </button>
                     </div>
 
                     { isDroppedDown ? (
@@ -120,9 +122,14 @@ const Dashboard = () => {
                         <div></div>
                     )}
 
-                    <div className='flex justify-between p-6'>
-                        <Graph data={dummyGraph} variableNames={selectedVars.map((v) => v.name)}/>
-                        <KPIs />
+                    {/* Graph component and KPI component */}
+                    <div className='flex flex-col lg:flex-row gap-4 justify-between p-6 px-4'>
+                        <div className="w-full md:w-2/3">
+                            <Graph data={dummyGraph} variableNames={selectedVars.map((v) => v.name)}/>
+                        </div>
+                        <div className="w-full lg:w-1/3">
+                            <KPIs />
+                        </div>
                     </div>
 
                     <SlideOverPanel
